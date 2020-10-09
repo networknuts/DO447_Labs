@@ -1,0 +1,2 @@
+Create a role and ensure that it runs after running a debug task. Post completion of the role,
+another debug task should take place.

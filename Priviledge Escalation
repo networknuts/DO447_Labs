@@ -1,0 +1,22 @@
+---
+- name: Deploy web services
+ hosts: webservers
+ become: false
+ tasks:
+    - name: Ensure httpd is installed
+      yum:
+        name: httpd
+        state: installed
+    - name: Start and enable webserver
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+    - name: Test website from itself, do not become
+      uri:
+        url: http://{{ ansible_host }}
+        return_content: yes
+      register: webpage
+      failed_when: webpage.status != 200
+
+Run this playbook with privilege escalation on the first two tasks.
